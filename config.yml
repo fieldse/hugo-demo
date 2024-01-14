@@ -5,9 +5,9 @@ theme: 'paper'
 
 params:
   color: 'linen'
-  avatar: 'nanxiaobei@gmail.com'
-  name: 'Lee'
-  bio: 'Discover fresh context'
+  avatar: 'githubusercontent.com/u/394065'
+  name: 'Matt'
+  bio: 'Pushing out sites like what!'
 
 
 menu:
