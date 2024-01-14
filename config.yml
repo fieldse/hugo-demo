@@ -1,0 +1,28 @@
+title: 'Hugo Site'
+baseURL: 'https://example.org/'
+languageCode: 'en-us'
+theme: 'paper'
+
+params:
+  color: 'linen'
+  avatar: 'nanxiaobei@gmail.com'
+  name: 'Lee'
+  bio: 'Discover fresh context'
+
+
+menu:
+  main:
+    - identifier: "about"
+      name: "About"
+      url: "/about/"
+      weight: 10
+      
+    - identifier: "contact"
+      name: "Contact"
+      url: "/contact/"
+      weight: 10
+
+taxonomies:
+  category: "categories"
+  tag: "tags"
+  series: "series"
