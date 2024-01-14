@@ -12,15 +12,25 @@ params:
 
 menu:
   main:
+    - identifier: "posts"
+      name: "Posts"
+      url: "/posts/"
+      weight: 10
+      
     - identifier: "about"
       name: "About"
       url: "/about/"
-      weight: 10
+      weight: 20
+      
+    - identifier: "tags"
+      name: "Tags"
+      url: "/tags/"
+      weight: 40
       
     - identifier: "contact"
       name: "Contact"
       url: "/contact/"
-      weight: 10
+      weight: 50
 
 taxonomies:
   category: "categories"
