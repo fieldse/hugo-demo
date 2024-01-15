@@ -1,0 +1,12 @@
+<p>This is the taxonomy page</p>
+{{ with .Params.description }}
+  <p>{{.}}</p>
+{{ end }}
+
+<ul>
+  {{ range .Data.Pages }}
+     <li>
+       <a href="{{ .Permalink}}">{{ .Title }}</a>
+     </li>
+  {{ end }}
+</ul>
