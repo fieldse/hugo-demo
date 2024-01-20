@@ -8,6 +8,8 @@ tags: ['mermaids', 'ocean', under-the-sea]
 
 # Mermaids or fish-ladies?
 
+![](/img/inverse-mermaid.jpg)
+
 _Pertinent questions:_
 
 - How do you know whether the head or tail should be the human part?
