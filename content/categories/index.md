@@ -1,4 +1,4 @@
-# Tags
+# Categories
 
 Nothing to see here!
 
