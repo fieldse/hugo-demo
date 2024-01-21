@@ -2,24 +2,43 @@
 
 <!-- all tags or single tag -->
 {{ $pageTitle := .Title }}
-{{ $isTaxonomyPage := eq .Type "tags" }}
-{{ $isAllTags := and (eq .Title "Tags") }}
-{{ $hasMany := gt 1 (len .Data.Pages) }}
+{{ $term := .Type }}
+{{ $termLower := strings.ToLower .Type }}
+{{ $titleLower := strings.ToLower .Title }}
+{{ $isTaxonomyPage := or (eq .Type "tags") (eq .Type "categories" ) }}
+{{ $isIndex := eq $termLower $titleLower}}
+{{ $numPages := len .Data.Pages }}
+
+{{ if eq $numPages 0 }}
+  <h1>{{ .Title}}</h1>
+  <h2 class="mb-14">Empty - nothing to see here</h2>
+{{ end}}
+
+<pre class="text-white text-sm my-4">
+  term: {{ $term }}
+  title: {{ .Title }}
+  titleLower: {{ $titleLower }}
+  termLower: {{ $termLower }}
+  taxonomy page? : {{ if $isTaxonomyPage }} true {{ else }} false {{ end }}
+  is index? : {{ if $isIndex }} true {{ else }} false {{ end }}
+  numPages: {{ $numPages }}
+</pre>
+
 {{ if $isTaxonomyPage }}
-  {{ if $isAllTags }}
-    <h1>All tags</h1>
+  {{ if $isIndex }}
+    <h1>All {{ $termLower }}</h1>
   {{ else }}
 
   <h1 class="mb-6">#{{ .Title }}</h1>
   <!-- back to all tags -->
     <button class="mb-6 p-4 text-lg">
-      <a href="/tags" class="no-underline">
-        ← all tags
+      <a href="/{{ $termLower }}" class="no-underline">
+        ← back to all {{ $termLower }}
       </a>
     </button>
 
     <h3 class="mb-14 text-lg">{{ .Data.Pages | len }}
-      {{ if $hasMany }} posts {{ else }} post {{ end }} tagged with #{{ .Title }}</h3>
+      {{ if gt 1 $numPages }} posts {{ else }} post {{ end }} with {{ $term }} #{{ .Title }}</h3>
   {{ end }}
 {{ end }}
 
@@ -31,7 +50,7 @@
   {{ range .Data.Pages }}
     <li class="my-4" >
       <!-- add date to single tag view -->
-      {{ if not $isAllTags }}
+      {{ if not $isIndex }}
       <time class="inline-block text-sm antialiased opacity-60 mr-4">{{ .Date | time.Format ":date_medium" }}</time>
       {{ end }}
 

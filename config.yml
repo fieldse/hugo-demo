@@ -3,6 +3,10 @@ baseURL: 'https://example.org/'
 languageCode: 'en-us'
 theme: 'paper'
 
+taxonomies:
+  tags: "tag"
+  categories: "categories"
+
 params:
   color: 'linen'
   avatar: 'githubusercontent.com/u/394065'
@@ -25,6 +29,11 @@ menu:
     - identifier: "tags"
       name: "Tags"
       url: "/tags/"
+      weight: 30
+
+    - identifier: "categories"
+      name: "Categories"
+      url: "/categories/"
       weight: 40
       
     - identifier: "contact"
