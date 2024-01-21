@@ -5,59 +5,58 @@
 {{ $term := .Type }}
 {{ $termLower := strings.ToLower .Type }}
 {{ $titleLower := strings.ToLower .Title }}
-{{ $isTaxonomyPage := or (eq .Type "tags") (eq .Type "categories" ) }}
 {{ $isIndex := eq $termLower $titleLower}}
 {{ $numPages := len .Data.Pages }}
 
-{{ if eq $numPages 0 }}
-  <h1>{{ .Title}}</h1>
-  <h2 class="mb-14">Empty - nothing to see here</h2>
-{{ end}}
-
-<pre class="text-white text-sm my-4">
-  term: {{ $term }}
-  title: {{ .Title }}
-  titleLower: {{ $titleLower }}
-  termLower: {{ $termLower }}
-  taxonomy page? : {{ if $isTaxonomyPage }} true {{ else }} false {{ end }}
-  is index? : {{ if $isIndex }} true {{ else }} false {{ end }}
-  numPages: {{ $numPages }}
-</pre>
-
-{{ if $isTaxonomyPage }}
-  {{ if $isIndex }}
-    <h1>All {{ $termLower }}</h1>
-  {{ else }}
-
+{{ if $isIndex }}
+  <h1>All {{ $termLower }}</h1>
+{{ else }}
   <h1 class="mb-6">#{{ .Title }}</h1>
-  <!-- back to all tags -->
-    <button class="mb-6 p-4 text-lg">
-      <a href="/{{ $termLower }}" class="no-underline">
-        ← back to all {{ $termLower }}
-      </a>
-    </button>
 
-    <h3 class="mb-14 text-lg">{{ .Data.Pages | len }}
-      {{ if gt 1 $numPages }} posts {{ else }} post {{ end }} with {{ $term }} #{{ .Title }}</h3>
-  {{ end }}
+  <!-- back to taxonomy index -->
+  <button class="mb-6 p-4 text-lg">
+    <a href="/{{ $termLower }}" class="no-underline">
+      ← all {{ $termLower }}
+    </a>
+  </button>
+
+  <h3 class="mb-14 text-lg">{{ $numPages }}
+    {{ if gt 1 $numPages }} posts {{ else }} post {{ end }} with {{ $term }} "{{ .Title }}"
+  </h3>
 {{ end }}
 
+<!-- description -->
 {{ with .Params.description }}
 <p>{{.}}</p>
 {{ end }}
 
-<ul>
-  {{ range .Data.Pages }}
-    <li class="my-4" >
-      <!-- add date to single tag view -->
-      {{ if not $isIndex }}
-      <time class="inline-block text-sm antialiased opacity-60 mr-4">{{ .Date | time.Format ":date_medium" }}</time>
-      {{ end }}
 
-      <span class="inline-block ml-4 my-0">
-        <a href="{{ .Permalink}}">{{ .Title }}</a>
-      </span>
-    </li>
-  {{ end }}
-</ul>
+{{ if eq $numPages 0 }}
+  <h1>{{ .Title}}</h1>
+  <h2 class="mb-14">Empty - nothing to see here</h2>
+{{ else }}
+  <ul>
+    {{ range .Data.Pages }}
+      {{ $isSingular := eq 1 (len .Pages) }}
+      <li class="my-4 flex gap-4"  style="align-items: baseline;">
+        <!-- add date to single tag view -->
+        {{ if not $isIndex }}
+          <time class="text-sm antialiased opacity-60 mr-4">{{ .Date | time.Format ":date_medium" }}</time>
+        {{ end }}
+
+        <span class="ml-4 my-0">
+          {{ if $isIndex }}
+          <span class="mr-12 text-gray-200">
+            {{ len .Pages }} {{ if $isSingular }} post {{ else }} posts {{ end }} &mdash;
+          </span>
+          {{ end }}
+          <span>
+            <a href="{{ .Permalink}}">{{ .Title }}</a>
+          </span>
+        </span>
+      </li>
+    {{ end }}
+  </ul>
+{{ end }}
+
 {{ end }}
